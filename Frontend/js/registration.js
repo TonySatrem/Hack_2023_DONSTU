@@ -30,8 +30,7 @@ regForm.addEventListener('submit', (e) => {
     inpSurname.classList.add('invalid')
     return
   }
-  else
-  {
+  else {
     inpSurname.classList.remove('invalid')
   }
 
@@ -75,12 +74,16 @@ regForm.addEventListener('submit', (e) => {
     password: password
   }
 
+  let id;
+
   fetch("api/users", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(data)
+  }).then((body) => {
+    const id = body.id
   })
 })
 

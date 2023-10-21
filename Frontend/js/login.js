@@ -1,8 +1,8 @@
-const regForm = document.getElementById('loginForm')
+const loginForm = document.getElementById('loginForm')
 const inpPhoneNumber = document.getElementById('phoneNumber')
 const inpPassword = document.getElementById('password')
 
-regForm.addEventListener("submit", (e) => {
+loginForm.addEventListener("submit", (e) => {
   e.preventDefault()
 
   const phoneNumber = inpPhoneNumber.value 
@@ -28,14 +28,14 @@ regForm.addEventListener("submit", (e) => {
     phoneNumber: phoneNumber,
     password: password
   }
-
+  console.log(data)
   fetch("api/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(data)
-  })
+  }).then(console.log)
 })
 
 function checkPhoneNumber (phoneNumber) {
