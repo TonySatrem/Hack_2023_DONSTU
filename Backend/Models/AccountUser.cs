@@ -8,7 +8,7 @@ namespace Backend.Models
         {
             name = user.name;
             surname = user.surname;
-            dataBirthday = user.dataBirthday;
+            dataBirthday = user.birthDate;
             phonenumber = user.phonenumber;
             hashPassword = Helper.SHA512(user.password);
             isAdmin = user.admin;
