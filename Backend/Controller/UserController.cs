@@ -27,19 +27,23 @@ namespace Backend.Controller
         {
             app.MapPost("/api/users", async delegate (ApplicationContext db, HttpContext context)
             {
+                Console.WriteLine("Try register user");
                 using var reader = new StreamReader(context.Request.Body);
                 var body = await reader.ReadToEndAsync();
+                Console.WriteLine(body);
                 var user = JsonSerializer.Deserialize<RegisterUser>(body, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                 if (user == null)
                 {
+                    Console.WriteLine("Null json");
                     context.Response.StatusCode = StatusCodes.Status204NoContent;
                     await context.Response.WriteAsync("User is null");
                     return;
                 }
 
-                if (db.Users.FirstOrDefault(u => u.login == user.login) != null)
+                if (db.Users.FirstOrDefault(u => u.phonenumber == user.phonenumber) != null)
                 {
+                    Console.WriteLine("UserExists");
                     context.Response.StatusCode = StatusCodes.Status400BadRequest;
                     await context.Response.WriteAsync("User already exists.");
                     return;
@@ -73,7 +77,7 @@ namespace Backend.Controller
                     return;
                 }
 
-                var user = db.Users.FirstOrDefault(u => u.login == loginInfo.login && u.hashPassword == Helper.SHA512(loginInfo.password));
+                var user = db.Users.FirstOrDefault(u => u.phonenumber == loginInfo.login && u.hashPassword == Helper.SHA512(loginInfo.password));
                 if (user == null)
                 {
                     context.Response.StatusCode = StatusCodes.Status400BadRequest;
@@ -87,7 +91,7 @@ namespace Backend.Controller
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim(ClaimTypes.Name, user.login)
+                        new Claim(ClaimTypes.Name, user.phonenumber)
                     }),
                     Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Authorization.PrivateKey()), SecurityAlgorithms.HmacSha256Signature)
@@ -125,6 +129,14 @@ namespace Backend.Controller
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                     await context.Response.WriteAsync("Invalid token.");
                 }
+            });
+
+            app.MapGet("/api/users/", async delegate (HttpContext context, ApplicationContext db)
+            {
+                var json = JsonSerializer.Serialize(db.Users.ToList(), Helper.JsonOpt());
+                context.Response.ContentType = "application/json";
+                context.Response.StatusCode = StatusCodes.Status200OK;
+                await context.Response.WriteAsync(json);
             });
 
             app.MapMethods("/api/users/{id}", new[] { "PATCH" }, async delegate (int id, HttpContext context, ApplicationContext db)
