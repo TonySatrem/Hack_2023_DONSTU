@@ -66,6 +66,7 @@ namespace Backend.Controller
 
             app.MapPost("/api/login", async delegate (ApplicationContext db, HttpContext context)
             {
+                Console.WriteLine("Try login");
                 using var reader = new StreamReader(context.Request.Body);
                 var body = await reader.ReadToEndAsync();
                 var loginInfo = JsonSerializer.Deserialize<LoginInfo>(body, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
@@ -74,14 +75,16 @@ namespace Backend.Controller
                 {
                     context.Response.StatusCode = StatusCodes.Status204NoContent;
                     await context.Response.WriteAsync("Login info is null");
+                    Console.WriteLine("Login info is null");
                     return;
                 }
 
-                var user = db.Users.FirstOrDefault(u => u.phonenumber == loginInfo.login && u.hashPassword == Helper.SHA512(loginInfo.password));
+                var user = db.Users.FirstOrDefault(u => u.phonenumber == loginInfo.phonenumber && u.hashPassword == Helper.SHA512(loginInfo.password));
                 if (user == null)
                 {
                     context.Response.StatusCode = StatusCodes.Status400BadRequest;
                     await context.Response.WriteAsync("Invalid username or password");
+                    Console.WriteLine("Invalid username or password");
                     return;
                 }
 
@@ -111,6 +114,7 @@ namespace Backend.Controller
                 var json = JsonSerializer.Serialize(customObject, Helper.JsonOpt());
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = StatusCodes.Status200OK;
+                Console.WriteLine(json);
                 await context.Response.WriteAsync(json);
             });
 
