@@ -9,7 +9,7 @@ namespace Backend.Models
             name = user.name;
             surname = user.surname;
             dataBirthday = user.dataBirthday;
-            login = user.login;
+            phonenumber = user.phonenumber;
             hashPassword = Helper.SHA512(user.password);
             isAdmin = user.admin;
             return this;
@@ -23,8 +23,8 @@ namespace Backend.Models
                 surname = user.surname;
             if (user.dataBirthday != null)
                 dataBirthday = user.dataBirthday;
-            if (user.login != null)
-                login = user.login;
+            if (user.phonenumber != null)
+                phonenumber = user.phonenumber;
             if (user.isAdmin != null)
                 isAdmin = user.isAdmin;
             return this;
@@ -34,7 +34,7 @@ namespace Backend.Models
         public string? name { get; set; }
         public string? surname { get; set; }
         public DateTime? dataBirthday { get; set; }
-        public string? login { get; set; }
+        public string? phonenumber { get; set; }
         [JsonIgnore]
         public string? hashPassword { get; set; }
         public bool? isAdmin { get; set; }
