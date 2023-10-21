@@ -13,7 +13,7 @@ regForm.addEventListener('submit', (e) => {
 
   const username = inpUsername.value
   const surname = inpSurname.value
-  const birthDate = inpBirthDate.value.split('.').reverse().join()
+  const birthDate = inpBirthDate.value.split('.').reverse().join(".")
   const phoneNumber = inpPhoneNumber.value
   const password = inpPassword.value
   const confirmPassword = inpConfirmPassword.value
