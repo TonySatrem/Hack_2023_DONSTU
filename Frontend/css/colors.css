@@ -1,0 +1,28 @@
+.c-primary {
+  color: #50B848;
+}
+.c-secondary {
+  color: #EAC776; 
+}
+.c-black {
+  color: #0C0B17; 
+}
+.c-white {
+  color: #FFFFFF; 
+}
+.c-error {
+  color: #E04042; 
+}
+.c-info {
+  color: #1D97E4; 
+}
+.c-ligher {
+  color: #F1F3F9; 
+}
+
+.bg-grad-inv {
+  background: linear-gradient(to right, #70DF67, #50B848, #58C250, #70DF67);
+}
+.bg-ligher {
+  background-color: #F1F3F9;
+}

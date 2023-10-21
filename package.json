@@ -1,0 +1,24 @@
+{
+  "name": "hack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "css": "npx tailwindcss -i ./Frontend/css/inStyles.css -o ./Frontend/css/styles.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TonySatrem/Hack_2023_DONSTU.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TonySatrem/Hack_2023_DONSTU/issues"
+  },
+  "homepage": "https://github.com/TonySatrem/Hack_2023_DONSTU#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  }
+}

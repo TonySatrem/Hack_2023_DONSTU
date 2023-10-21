@@ -1,0 +1,76 @@
+@import url("./fonts.css");
+@import url("./colors.css");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: 'bold';
+}
+
+html {
+  overflow: hidden;
+}
+
+input {
+  position: relative;
+  border-radius: 8px;
+  border-width: 0px;
+  background-color: #FFFFFF;
+  padding: 1em;
+  margin: 0.6em;
+  max-width: 15em;
+  max-height: 1.5em;
+}
+
+button {
+  width: 15em;
+  height: 3em;
+  border-radius: 8px;
+  border-width: 0px;
+  background-color: #50B848 !important;
+  margin-left: 1em;
+  margin-top: 2em;
+  color: #FFFFFF;
+  font-size: 1em;
+  margin: 0.6em 0.2em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat';
+}
+
+.invalid {
+  border-color: #E04042;
+  border-width: 1px;
+}
+
+@media screen and (width<=600px) {
+  html {
+    overflow-y: visible;
+  }
+  #right {
+    display: none;
+  }
+  #left {
+    width: 100%;
+  }
+}
+
+@media screen and (width > 600px) and (width <1200px) {
+  #right {
+    width: 50%;
+  }
+  #left {
+    width: 50%;
+  }
+}
+
+@media screen and (width>=1200px) {
+  #right {
+    width: 75%;
+  }
+  #left {
+    width: 25%;
+  }
+}

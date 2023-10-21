@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Easy Intership</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="w-scren h-screen">
+  <main class="w-full h-full flex">
+
+    <div id="right" class="bg-grad-inv w-3/4 h-full flex justify-center items-center">
+      <div id="welcomeContainter" class="flexbox text-center justify-center items-center">
+        <h4 class="c-white text-3xl font-light ml-2">Добро пожаловать в</h4>
+        <h1 class="c-white text-5xl font-bold mt-2">Easy Intership</h1>
+        <p class="c-white text-lg `font-thin pt-3">Уникальная возможность пройти стажировку в пару кликов прямо сейчас</p>
+      </div>
+    </div>
+
+    <div id="left" class="w-1/4 h-full bg-ligher flex flex-column text-center justify-center items-center ">
+      <div id="logoContainer" class="absolute right-1 top-1">
+        <img src="../assets/logo.svg" alt="">
+      </div>
+      <div id="regContainer" class="inset-x-10 inset-y-30">
+        <div id="authTextContainer" class="inline-block">
+          <h3 class="text-primary font-black text-xl">Авторизация</h3>
+          <p> <span class="c-error">*</span> - обязательные поля</p>
+        </div>
+        <br>
+        <div id="formContainer" class="inline-block">
+          <form action="" id="loginForm">
+            <input type="text" id="phoneNumber" placeholder="Номер телефона"> 
+            <input type="password" id="password" placeholder="Пароль">
+            <button type="submit" id="buttonSubmit"> Войти </button>  
+          </form>
+        </div>
+        <br>
+        <div id="regContainer" class="inline-block relative mt-10">
+          <p class="c-info">Ещё не зарегестрированы? <a href="./registration.html" class="underline">Зарегестрироваться</a> </p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="../js/registration.js"></script>
+</body>
+</html>
