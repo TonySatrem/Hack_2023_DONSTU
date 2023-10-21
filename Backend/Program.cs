@@ -19,6 +19,8 @@ using Microsoft.EntityFrameworkCore;
 using Backend;
 using Microsoft.Extensions.Options;
 using Backend.Controller;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -61,6 +63,56 @@ app.MapQuestionRoutes();
 app.MapTestModuleRoutes();
 app.MapUserAnswerRoutes();
 
-app.Map("/", () => "Home Page");
+var currentDirectory = Directory.GetCurrentDirectory();
+var parentDirectory = Path.GetDirectoryName(currentDirectory);
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(parentDirectory, "Frontend")),
+    RequestPath = string.Empty
+});
+
+app.Map("/", context =>
+{
+    if (!context.Request.Headers.ContainsKey("Authorization"))
+    {
+        context.Response.Redirect("/registration");
+        return Task.CompletedTask;
+    }
+    else
+    {
+        string token = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+        var tokenHandler = new JwtSecurityTokenHandler();
+
+        try
+        {
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Authorization.PrivateKey()),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true
+            }, out SecurityToken validatedToken);
+
+            context.Response.Redirect("/login");
+        }
+        catch
+        {
+            context.Response.Redirect("/registration");
+        }
+
+        return Task.CompletedTask;
+    }
+});
+
+app.Map("/registration", context =>
+{
+    return context.Response.WriteAsync(Helper.GetHTML("registration"));
+});
+
+app.Map("/login", context =>
+{
+    return context.Response.WriteAsync(Helper.GetHTML("login"));
+});
 
 app.Run();

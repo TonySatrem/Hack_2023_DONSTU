@@ -30,5 +30,12 @@ namespace Backend
             };
             return options;
         }
+
+        public static string GetHTML(string name)
+        {
+            var currentDirectory = Directory.GetCurrentDirectory();
+            var parentDirectory = Path.GetDirectoryName(currentDirectory);
+            return File.ReadAllText(Path.Combine(parentDirectory, "Frontend", "html", $"{name}.html"));
+        }
     }
 }
