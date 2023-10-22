@@ -191,6 +191,32 @@ namespace Backend.Controller
                     await context.Response.WriteAsync("Invalid token.");
                 }
             });
+
+            app.MapGet("/api/users/is_authorized", async delegate (HttpContext context, ApplicationContext db)
+            {
+                using var reader = new StreamReader(context.Request.Body);
+                var body = await reader.ReadToEndAsync();
+
+                var token = JsonSerializer.Deserialize<UserToken>(body, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                if (!Authorization.IsTokenValid(token.token))
+                {
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    await context.Response.WriteAsync("");
+                    return;
+                }
+
+                var users = db.Users.ToList();
+                foreach (var dbuser in users)
+                {
+                    if (dbuser.token != null && Authorization.TokenComparer(dbuser.token, token.token))
+                    {
+                        context.Response.StatusCode = StatusCodes.Status200OK;
+                        await context.Response.WriteAsync("");
+                        return;
+                    }
+                }
+            });
         }
     }
 }

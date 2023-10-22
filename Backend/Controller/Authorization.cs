@@ -6,6 +6,11 @@ using System.Text;
 
 namespace Backend.Controller
 {
+    public class UserToken
+    {
+        public string token { get; set; }
+    }
+
     public static class Authorization
     {
         public static byte[] PrivateKey()
@@ -13,7 +18,29 @@ namespace Backend.Controller
             return Encoding.UTF8.GetBytes("12345678901234567890123456789012");
         }
 
-        private static bool TokenComparer(string tokenString1, string tokenString2)
+        public static bool IsTokenValid(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            try
+            {
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(PrivateKey()),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true
+                }, out SecurityToken validatedToken);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool TokenComparer(string tokenString1, string tokenString2)
         {
             if (tokenString1 == null || tokenString2 == null)
                 return false;
@@ -43,23 +70,7 @@ namespace Backend.Controller
             if (user == null || !TokenComparer(user.token, token))
                 return null;
 
-            try
-            {
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateLifetime = true
-                }, out SecurityToken validatedToken);
-
-                return user;
-            }
-            catch
-            {
-                return null;
-            }
+            return (IsTokenValid(token) ? user : null);
         }
     }
 }
