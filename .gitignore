@@ -2,3 +2,37 @@ node_modules/
 backend/obj/*
 backend/bin/*
 .vs/*
+
+CodeValidator/HELP.md
+CodeValidator/target/
+CodeValidator/!.mvn/wrapper/maven-wrapper.jar
+CodeValidator/!**/src/main/**/target/
+CodeValidator/!**/src/test/**/target/
+
+### STS ###
+CodeValidator/.apt_generated
+CodeValidator/.classpath
+CodeValidator/.factorypath
+CodeValidator/.project
+CodeValidator/.settings
+CodeValidator/.springBeans
+CodeValidator/.sts4-cache
+
+### IntelliJ IDEA ###
+CodeValidator/.idea
+CodeValidator/*.iws
+CodeValidator/*.iml
+CodeValidator/*.ipr
+
+### NetBeans ###
+CodeValidator//nbproject/private/
+CodeValidator//nbbuild/
+CodeValidator//dist/
+CodeValidator//nbdist/
+CodeValidator//.nb-gradle/
+CodeValidator/build/
+CodeValidator/!**/src/main/**/build/
+CodeValidator/!**/src/test/**/build/
+
+### VS Code ###
+CodeValidator/.vscode/
